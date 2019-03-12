@@ -1,19 +1,32 @@
-# sdk exclusions
-/.metadata
-/**/*RemoteSystemsTempFiles
-/**/*Debug/*
-/**/*Release
-/**/*webtalk
-/.sdk
-/*.log
-# ignore everything in the hw_platform
-/*hw_platform*/*
-# except
-!/*hw_platform*/*.hdf
-!/*hw_platform*/.*project
-# ignore everything in the BSP
-/*_bsp*/*
-# except
-!/*_bsp*/system.mss
-!/*_bsp*/Makefile
-!/*_bsp*/.*project
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
