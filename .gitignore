@@ -1,5 +1,6 @@
 # sdk exclusions
 /.metadata
+/**/*expanded
 /**/*RemoteSystemsTempFiles
 /**/*Debug/*
 /**/*Release
