@@ -17,6 +17,3 @@
 !/*_bsp*/system.mss
 !/*_bsp*/Makefile
 !/*_bsp*/.*project
-# include the relevant elf files
-!/**/*Debug/*.elf
-!/**/*Debug/*.elf.size
