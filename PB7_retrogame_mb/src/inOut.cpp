@@ -14,7 +14,8 @@ inOut::inOut() {
 	// TODO Auto-generated constructor stub
 	this->x = 0x1400;
 	this->y = 0xf000;
-	XGpio_Initialize(&gpio, 1);
+
+	XGpio_Initialize(&gpio, 1); // TODO gpio block voor output
 }
 
 inOut::~inOut() {
@@ -25,10 +26,10 @@ void inOut::input(u8 dataIn){
 
 	switch(dataIn)
 	{
-	case 0b0001: this->y--; break;
-	case 0b0010: this->x--; break;
-	case 0b0100: this->x++; break;
-	case 0b1000: this->y++; break;
+	case 0b0001: this->y-=50; break;
+	case 0b0010: this->x-=50; break;
+	case 0b0100: this->x+=50; break;
+	case 0b1000: this->y+=50; break;
 	}
 	output();
 }
