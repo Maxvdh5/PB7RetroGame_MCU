@@ -14,6 +14,7 @@ inOut::inOut() {
 	// TODO Auto-generated constructor stub
 	this->x = 0x1400;
 	this->y = 0xf000;
+
 	XGpio_Initialize(&gpio, 1); // TODO gpio block voor output
 }
 
