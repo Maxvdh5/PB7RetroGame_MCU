@@ -16,13 +16,13 @@ public:
 	virtual ~inOut();
 
 public:
-	void input(char);
+	void input(u8);
 	void output();
 
 private:
-	int data;
+	u8 x;
+	u8 y;
 	XGpio gpio;
-	u32 out;
 };
 
 #endif /* SRC_INOUT_H_ */
