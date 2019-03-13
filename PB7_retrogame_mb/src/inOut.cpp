@@ -14,7 +14,7 @@ inOut::inOut() {
 	// TODO Auto-generated constructor stub
 	this->x = 0x1400;
 	this->y = 0xf000;
-	XGpio_Initialize(&gpio, 0); // TODO gpio block voor output
+	XGpio_Initialize(&gpio, 1);
 }
 
 inOut::~inOut() {
@@ -39,23 +39,23 @@ void inOut::output()
 
 	output = 0x1101<<16;
 	output = output|this->x;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 	xil_printf("X: %16x\r\n", output);
 	output = 0;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 
 	output = 0x1102<<16;
 	output = output|this->y;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 	xil_printf("Y: %16x\r\n", output);
 	output = 0;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 
 	output = 0x1103<<16;
 	output = output|0x00;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 	xil_printf("S: %16x\r\n", output);
 	output = 0;
-	XGpio_DiscreteWrite(&gpio, 2, output);
+	XGpio_DiscreteWrite(&gpio, 1, output);
 
 }
