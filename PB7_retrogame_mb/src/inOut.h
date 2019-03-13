@@ -20,8 +20,8 @@ public:
 	void output();
 
 private:
-	u8 x;
-	u8 y;
+	u16 x;
+	u16 y;
 	XGpio gpio;
 };
 

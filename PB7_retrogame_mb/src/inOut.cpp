@@ -6,9 +6,7 @@
  */
 
 #include "inOut.h"
-
 #include "xgpio.h"
-
 #include "xil_printf.h"
 
 
@@ -27,10 +25,10 @@ void inOut::input(u8 dataIn){
 
 	switch(dataIn)
 	{
-	case 0001: this->y--; break;
-	case 0010: this->x--; break;
-	case 0100: this->x++; break;
-	case 1000: this->y++; break;
+	case 0b0001: this->y--; break;
+	case 0b0010: this->x--; break;
+	case 0b0100: this->x++; break;
+	case 0b1000: this->y++; break;
 	}
 	output();
 }
@@ -41,29 +39,23 @@ void inOut::output()
 
 	output = 0x1101<<16;
 	output = output|this->x;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
-	output<<32;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
+	XGpio_DiscreteWrite(&gpio, 2, output);
+	xil_printf("X: %16x\r\n", output);
+	output = 0;
+	XGpio_DiscreteWrite(&gpio, 2, output);
 
 	output = 0x1102<<16;
 	output = output|this->y;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
-	output<<32;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
+	XGpio_DiscreteWrite(&gpio, 2, output);
+	xil_printf("Y: %16x\r\n", output);
+	output = 0;
+	XGpio_DiscreteWrite(&gpio, 2, output);
 
 	output = 0x1103<<16;
 	output = output|0x00;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
-	output<<32;
-	//XGpio_DiscreteWrite(&gpio, 2, output);
-	xil_printf("\r test: %20x", output);
-
-
-
+	XGpio_DiscreteWrite(&gpio, 2, output);
+	xil_printf("S: %16x\r\n", output);
+	output = 0;
+	XGpio_DiscreteWrite(&gpio, 2, output);
 
 }
