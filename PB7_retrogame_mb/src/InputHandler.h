@@ -8,7 +8,7 @@
 #ifndef SRC_INPUTHANDLER_H_
 #define SRC_INPUTHANDLER_H_
 
-#include "xbasic_types.h"
+#include "xil_types.h"
 #include "xgpio.h"
 #include "xintc.h"
 
