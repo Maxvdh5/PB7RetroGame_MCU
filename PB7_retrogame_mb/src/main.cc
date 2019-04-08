@@ -23,14 +23,15 @@ void initializeGpio()
 }
 
 int main() {
+
+	// volatile bool to prevent the busy-loop from being optimized out.
+	volatile bool 	Running 	= true;
+
 	xil_printf("\r\nretrogame loading...");
 
 	initializeGpio();
 
 	xil_printf("done.\r\n");
 
-	while(1)
-	{
-
-	}
+	while (Running);
 }
