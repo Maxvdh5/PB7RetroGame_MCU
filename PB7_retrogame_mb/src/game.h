@@ -23,6 +23,9 @@ public:
    int levelState();
    int highscoreState();
 
+   void inputHandeler(unsigned char);
+   bool IsBitSet( unsigned char, int);
+
 private:
     bool exit;
     //Level * level;

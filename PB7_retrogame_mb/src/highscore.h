@@ -19,10 +19,11 @@ public:
 
     void createObjects() override;
     void goDown() override;
-    void goUp() override;
     void switchSelected(Object*) override;
     int doSelected() override;
     void setSelected() override;
+    void goLeft() override;
+    void goRight() override;
 };
 
 #endif // HIGHSCORE_H

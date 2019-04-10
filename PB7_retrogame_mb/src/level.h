@@ -15,7 +15,8 @@ public:
     void insertObjects();
     void doGravity();
     bool checkCollision();
-
+    void goLeft();
+    void goRight();
     void jump(Object *);
 
     objectList *getObjects();
@@ -24,7 +25,6 @@ public:
 
     void createObjects() override;
     void goDown() override;
-    void goUp() override;
     void switchSelected(Object*) override;
     int doSelected() override;
     void setSelected() override;

@@ -45,10 +45,6 @@ void Highscore::goDown()
 
 }
 
-void Highscore::goUp()
-{
-
-}
 
 void Highscore::switchSelected(Object *)
 {
@@ -61,6 +57,16 @@ int Highscore::doSelected()
 }
 
 void Highscore::setSelected()
+{
+
+}
+
+void Highscore::goLeft()
+{
+
+}
+
+void Highscore::goRight()
 {
 
 }

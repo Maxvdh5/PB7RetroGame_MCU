@@ -14,13 +14,13 @@ public:
 
     void createObjects();
     void goDown();
-    void goUp();
     void switchSelected(Object*);
     int doSelected();
     void setSelected();
 
 
-
+    void goLeft() override;
+    void goRight() override;
     void update() override;
     void insertObjects() override;
     void doGravity() override;

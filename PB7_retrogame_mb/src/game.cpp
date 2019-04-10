@@ -45,15 +45,12 @@ void Game::writeFrame(GpioHandler *targetGpio)
 {
     this->objects = this->states->getObjects();
     this->objects->printObjects(targetGpio);
-    this->exit = true;
+       //this->exit = true;
 }
 
 int Game::startState()
 {
     //do interupt stuff
-//    this->states->goDown();
-//    this->states->goUp();
-//    this->states->setSelected();
     return this->states->doSelected();
 }
 
@@ -70,3 +67,31 @@ int Game::highscoreState()
 {
     return 0;
 }
+
+void Game::inputHandeler(unsigned char input)
+{
+    if(IsBitSet(input,4))
+    {
+        this->states->goDown();
+    }
+    if(IsBitSet(input,3))
+    {
+        this->states->goRight();
+    }
+    if(IsBitSet(input,2))
+    {
+        this->states->goLeft();
+    }
+    if(IsBitSet(input,1))
+    {
+        this->states->jump(this->states->getObjects()->getFirst());
+    }
+}
+
+bool Game::IsBitSet(unsigned char byte, int index)
+{
+    int mask = 1<<index;
+    return (byte & mask) != 0;
+}
+
+

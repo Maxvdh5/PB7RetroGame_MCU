@@ -119,6 +119,18 @@ bool Level::checkCollision()//+ directon
 
 }
 
+void Level::goLeft()
+{
+    Object * player = this->list->getFirst();
+    player->moveLeft();
+}
+
+void Level::goRight()
+{
+    Object * player = this->list->getFirst();
+    player->moveRight();
+}
+
 void Level::jump(Object * moving)
 {
     Object * index = this->list->getFirst();
@@ -157,10 +169,7 @@ void Level::goDown()
 
 }
 
-void Level::goUp()
-{
 
-}
 
 void Level::switchSelected(Object *)
 {

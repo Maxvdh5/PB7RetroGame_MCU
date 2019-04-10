@@ -13,11 +13,11 @@ public:
 
     virtual void createObjects()=0;
     virtual void goDown()=0;
-    virtual void goUp()=0;
     virtual void switchSelected(Object*)=0;
     virtual int doSelected()=0;
     virtual void setSelected()=0;
-
+    virtual void goLeft()=0;
+    virtual void goRight()=0;
 
 
     virtual void update()=0;

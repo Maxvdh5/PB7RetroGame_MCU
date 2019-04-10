@@ -34,22 +34,6 @@ void start::goDown()
     }
 }
 
-void start::goUp()
-{
-    if(this->selected != this->list->getFirst())
-    {
-        Object * looper = this->list->getFirst();
-
-        while(looper->getNext() != this->selected)
-        {
-            looper = looper->getNext();
-        }
-
-        switchSelected(looper);
-    }
-
-
-}
 
 void start::switchSelected(Object * switcher)
 {
@@ -71,10 +55,20 @@ int start::doSelected()
             }
         }
     }
-    return 98;
+    return 99;
 }
 
 void start::setSelected()
+{
+   // this->select = true;
+}
+
+void start::goLeft()
+{
+
+}
+
+void start::goRight()
 {
     this->select = true;
 }
@@ -101,6 +95,18 @@ bool start::checkCollision()
 
 void start::jump(Object *)
 {
+
+    if(this->selected != this->list->getFirst())
+    {
+        Object * looper = this->list->getFirst();
+
+        while(looper->getNext() != this->selected)
+        {
+            looper = looper->getNext();
+        }
+
+        switchSelected(looper);
+    }
 
 }
 
