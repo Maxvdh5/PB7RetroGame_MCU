@@ -93,6 +93,11 @@ bool start::checkCollision()
     return false;
 }
 
+void start::goStop()
+{
+
+}
+
 void start::jump(Object *)
 {
 

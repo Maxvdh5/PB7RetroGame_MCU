@@ -86,6 +86,10 @@ void Game::inputHandeler(unsigned char input)
     {
         this->states->jump(this->states->getObjects()->getFirst());
     }
+    if(input == 0)
+    {
+      this->states->goStop();
+    }
 }
 
 bool Game::IsBitSet(unsigned char byte, int index)

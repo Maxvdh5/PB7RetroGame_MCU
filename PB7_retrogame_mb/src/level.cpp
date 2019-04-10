@@ -131,6 +131,12 @@ void Level::goRight()
     player->moveRight();
 }
 
+void Level::goStop()
+{
+    Object * player = this->list->getFirst();
+    player->moveStop();
+}
+
 void Level::jump(Object * moving)
 {
     Object * index = this->list->getFirst();

@@ -17,6 +17,7 @@ public:
     bool checkCollision();
     void goLeft();
     void goRight();
+    void goStop();
     void jump(Object *);
 
     objectList *getObjects();

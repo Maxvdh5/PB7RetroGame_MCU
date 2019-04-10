@@ -148,3 +148,8 @@ void Object::moveRight()
 {
     this->setVelX(moveSpeed);
 }
+
+void Object::moveStop()
+{
+    this->setVelX(0);
+}

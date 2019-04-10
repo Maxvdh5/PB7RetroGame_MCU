@@ -25,6 +25,7 @@ public:
     void insertObjects() override;
     void doGravity() override;
     bool checkCollision() override;
+    void goStop() override;
 
     void jump(Object *) override;
 

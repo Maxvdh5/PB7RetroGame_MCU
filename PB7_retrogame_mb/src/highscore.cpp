@@ -70,3 +70,8 @@ void Highscore::goRight()
 {
 
 }
+
+void Highscore::goStop()
+{
+
+}

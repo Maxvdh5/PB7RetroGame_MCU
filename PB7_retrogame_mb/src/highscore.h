@@ -24,6 +24,7 @@ public:
     void setSelected() override;
     void goLeft() override;
     void goRight() override;
+    void goStop() override;
 };
 
 #endif // HIGHSCORE_H

@@ -18,6 +18,7 @@ public:
     virtual void setSelected()=0;
     virtual void goLeft()=0;
     virtual void goRight()=0;
+    virtual void goStop()=0;
 
 
     virtual void update()=0;

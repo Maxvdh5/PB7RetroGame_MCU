@@ -51,6 +51,7 @@ public:
     void moveUp();
     void moveLeft();
     void moveRight();
+    void moveStop();
 
 //    Direction direction;
 
