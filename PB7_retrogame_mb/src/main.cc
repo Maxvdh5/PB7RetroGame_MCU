@@ -1,16 +1,27 @@
 #include "HeapManager.h"
 #include "GpioHandler.h"
+#include "game.h"
+
 #include "xintc.h"
 #include "xil_printf.h"
 #include <cassert>
 
+Game 		*game;
+GpioHandler *buttonHandler;
+GpioHandler *vgaHandler;
+
 void buttonCallback(u8 data) {
-	xil_printf("button press: %d\n", data);
+	xil_printf("button press: %d\r\n", data);
+
 }
 
 void vgaCallback(u8 data) {
 	if(1 == data)
-		xil_printf("vga callback\r\n");
+	{
+		game->writeFrame(vgaHandler);
+		game->runFrame();
+//		xil_printf("vga callback\r\n");
+	}
 }
 
 void initializeGpio()
@@ -18,8 +29,8 @@ void initializeGpio()
 	XIntc Intc;
 	assert(GpioHandler::InitializeInterruptController(&Intc, XPAR_INTC_0_DEVICE_ID));
 
-	GpioHandler *buttonHandler 	= new GpioHandler(XPAR_GPIO_0_DEVICE_ID, XPAR_INTC_0_GPIO_0_VEC_ID, buttonCallback, &Intc);
-	GpioHandler *vgaHandler 	= new GpioHandler(XPAR_GPIO_1_DEVICE_ID, XPAR_INTC_0_GPIO_1_VEC_ID, vgaCallback, &Intc);
+	buttonHandler 	= new GpioHandler(XPAR_GPIO_0_DEVICE_ID, XPAR_INTC_0_GPIO_0_VEC_ID, buttonCallback, &Intc);
+	vgaHandler 		= new GpioHandler(XPAR_GPIO_1_DEVICE_ID, XPAR_INTC_0_GPIO_1_VEC_ID, vgaCallback, &Intc);
 }
 
 int main() {
@@ -30,6 +41,7 @@ int main() {
 	xil_printf("\r\nretrogame loading...");
 
 	initializeGpio();
+	game = new Game();
 
 	xil_printf("done.\r\n");
 

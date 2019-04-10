@@ -1,0 +1,72 @@
+#include "game.h"
+#include "objectlist.h"
+#include "object.h"
+#include "level.h"
+#include "start.h"
+#include "highscore.h"
+#include "states.h"
+
+
+Game::Game()
+{
+    this->exit = false;
+    states = new start();
+    this->objects = nullptr;
+    this->index = 0;
+    this->locIndex = 0;
+}
+
+Game::~Game()
+{
+
+}
+
+bool Game::getExit()
+{
+    return this->exit;
+}
+
+void Game::runFrame()
+{
+    index = locIndex;
+
+    switch(index)
+    {
+    case 0: locIndex = startState();  delete states; states = new start(); break;
+    case 1: locIndex = levelState(); delete states; states = new Level() ; break;
+    case 98: locIndex = levelState(); break;
+    case 99: locIndex = startState(); break;
+    }
+
+
+}
+
+void Game::writeFrame(GpioHandler *targetGpio)
+{
+    this->objects = this->states->getObjects();
+    this->objects->printObjects(targetGpio);
+    this->exit = true;
+}
+
+int Game::startState()
+{
+    //do interupt stuff
+//    this->states->goDown();
+//    this->states->goUp();
+//    this->states->setSelected();
+    return this->states->doSelected();
+}
+
+int Game::levelState()
+{
+    //do interupt stuff
+    this->states->doGravity();
+    this->states->checkCollision();
+    this->states->update();
+    return this->states->doSelected();
+}
+
+int Game::highscoreState()
+{
+    return 0;
+}
