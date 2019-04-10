@@ -11,7 +11,8 @@ GpioHandler *buttonHandler;
 GpioHandler *vgaHandler;
 
 void buttonCallback(u8 data) {
-	xil_printf("button press: %d\r\n", data);
+//	xil_printf("button press: %d\r\n", data);
+	game->inputHandeler(data);
 
 }
 
@@ -40,8 +41,8 @@ int main() {
 
 	xil_printf("\r\nretrogame loading...");
 
-	initializeGpio();
 	game = new Game();
+	initializeGpio();
 
 	xil_printf("done.\r\n");
 
