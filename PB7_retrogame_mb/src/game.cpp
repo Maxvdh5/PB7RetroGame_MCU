@@ -70,19 +70,19 @@ int Game::highscoreState()
 
 void Game::inputHandeler(unsigned char input)
 {
-    if(IsBitSet(input,4))
+    if(IsBitSet(input,3))
     {
         this->states->goDown();
     }
-    if(IsBitSet(input,3))
+    if(IsBitSet(input,2))
     {
         this->states->goRight();
     }
-    if(IsBitSet(input,2))
+    if(IsBitSet(input,1))
     {
         this->states->goLeft();
     }
-    if(IsBitSet(input,1))
+    if(IsBitSet(input,0))
     {
         this->states->jump(this->states->getObjects()->getFirst());
     }
