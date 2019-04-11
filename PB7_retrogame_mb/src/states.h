@@ -5,6 +5,11 @@
 #include "object.h"
 #include "objectlist.h"
 
+
+/**
+ * @brief The States class
+ * is a container class. The classes start and level derive form this.
+ */
 class States
 {
 public:

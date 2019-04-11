@@ -3,6 +3,11 @@
 
 class objectList;
 
+
+/**
+ * @brief The Object class
+ * is used to store all the data of an object.
+ */
 class Object
 {
 public:
@@ -25,32 +30,135 @@ public:
     Object *getNext();
 
 //   Direction operator|(const Direction &b) const;
-
+    /**
+     * @brief getX
+     * @return returns x
+     */
     int getX();
+
+    /**
+     * @brief getVelX
+     * @return returns velX
+     */
     int getVelX();
+
+    /**
+     * @brief getY
+     * @return returns y
+     */
     int getY();
+
+    /**
+     * @brief getVelY
+     * @return returns velY
+     */
     int getVelY();
+
+    /**
+     * @brief getSprite
+     * @return returns sprite
+     */
     int getSprite();
+
+    /**
+     * @brief getDeathly
+     * @return returns deathly
+     */
     bool getDeathly();
+
+    /**
+     * @brief getIsStatic
+     * @return returns isStatic
+     */
     bool getIsStatic();
+
+    /**
+     * @brief getIsSelected
+     * @return returns isSelected
+     */
     bool getIsSelected();
 
+    /**
+     * @brief setX
+     * sets X
+     */
     void setX(int);
+
+    /**
+     * @brief setVelX
+     * sets Velx
+     */
     void setVelX(int);
+
+    /**
+     * @brief setY
+     * sets Y
+     */
     void setY(int);
+
+    /**
+     * @brief setVelY
+     * sets velY
+     */
     void setVelY(int);
+
+    /**
+     * @brief setSprite
+     * sets sprite
+     */
     void setSprite(int);
+
+    /**
+     * @brief setDeathly
+     * sets deathly
+     */
     void setDeathly(bool);
+
+    /**
+     * @brief setIsStatic
+     * sets isStatic
+     */
     void setIsStatic(bool);
+
+    /**
+     * @brief setIsSelected
+     * sets isSelected
+     */
     void setIsSelected(bool);
 
+    /**
+     * @brief doUpdate
+     * updates an object and moves it to it's new location
+     */
     void doUpdate();
+    /**
+     * @brief doGravity
+     * runs gravity on an Object
+     */
     void doGravity();
 
-
+    /**
+     * @brief moveUp
+     * decreases Y
+     */
     void moveUp();
+
+    /**
+     * @brief moveLeft
+     * decreases X
+     */
     void moveLeft();
+
+    /**
+     * @brief moveRight
+     * increases X
+     */
     void moveRight();
+
+    /**
+     * @brief moveStop
+     * sets velX to 0
+     */
     void moveStop();
 
 //    Direction direction;

@@ -2,6 +2,12 @@
 #define HIGHSCORE_H
 #include "states.h"
 
+
+
+/**
+ * @brief The Highscore class
+ * is used to show the scored highscores. This class is not yet implemented.
+ */
 class Highscore : public States
 {
 public:
