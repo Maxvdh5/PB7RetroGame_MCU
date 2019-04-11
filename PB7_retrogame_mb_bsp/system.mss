@@ -54,4 +54,16 @@ BEGIN DRIVER
  PARAMETER HW_INSTANCE = axi_gpio_1
 END
 
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = bram
+ PARAMETER DRIVER_VER = 4.2
+ PARAMETER HW_INSTANCE = microblaze_0_local_memory_dlmb_bram_if_cntlr_1
+END
+
+BEGIN DRIVER
+ PARAMETER DRIVER_NAME = bram
+ PARAMETER DRIVER_VER = 4.2
+ PARAMETER HW_INSTANCE = microblaze_0_local_memory_ilmb_bram_if_cntlr_1
+END
+
 
