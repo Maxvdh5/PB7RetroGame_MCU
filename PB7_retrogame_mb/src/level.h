@@ -9,12 +9,13 @@ class Level : public States
 {
 public:
     Level();
+    Level(int);
     ~Level();
 
     void update();
-    void insertObjects();
+    void insertObjects(int);
     void doGravity();
-    bool checkCollision();
+    void checkCollision();
     void goLeft();
     void goRight();
     void goStop();

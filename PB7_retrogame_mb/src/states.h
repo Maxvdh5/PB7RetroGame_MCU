@@ -22,9 +22,9 @@ public:
 
 
     virtual void update()=0;
-    virtual void insertObjects()=0;
+    virtual void insertObjects(int)=0;
     virtual void doGravity()=0;
-    virtual bool checkCollision()=0;
+    virtual void checkCollision()=0;
 
     virtual void jump(Object *)=0;
 

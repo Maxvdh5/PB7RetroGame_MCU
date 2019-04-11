@@ -5,6 +5,7 @@
 #include "start.h"
 #include "highscore.h"
 #include "states.h"
+#include "GpioHandler.h"
 
 
 Game::Game()
@@ -14,6 +15,8 @@ Game::Game()
     this->objects = nullptr;
     this->index = 0;
     this->locIndex = 0;
+    this->levelSelector = 0;
+    this->death = 0;
 }
 
 Game::~Game()
@@ -32,8 +35,53 @@ void Game::runFrame()
 
     switch(index)
     {
-    case 0: locIndex = startState();  delete states; states = new start(); break;
-    case 1: locIndex = levelState(); delete states; states = new Level() ; break;
+    case 0:
+        delete states;
+        states = new start();
+        locIndex = startState();
+        break;
+
+    case 1:
+        delete states;
+        states = new Level(levelSelector) ;
+        locIndex = levelState();
+        break;
+
+    case 10:
+        //win scherm
+        locIndex = 0;
+        break;
+
+    case 11:
+        //gameover scherm
+    	death = 0;
+        locIndex = 0;
+        break;
+
+    case 50: //level won
+        if(levelSelector < 2)//aantal levels
+        {
+            levelSelector++;
+            locIndex = 1;
+        }
+        else
+        {
+            locIndex = 10;
+        }
+        break;
+     case 51:   //gameover
+        death++;
+
+        if(death <= 3)
+        {
+            locIndex = 1;
+        }
+        else
+        {
+            locIndex = 11;
+        }
+        break;
+
     case 98: locIndex = levelState(); break;
     case 99: locIndex = startState(); break;
     }
@@ -88,7 +136,7 @@ void Game::inputHandeler(unsigned char input)
     }
     if(input == 0)
     {
-      this->states->goStop();
+    	this->states->goStop();
     }
 }
 

@@ -4,6 +4,7 @@ start::start()
 {
     list = new objectList;
     createObjects();
+    select = false;
 
     this->selected = this->list->getFirst();
 }
@@ -78,7 +79,7 @@ void start::update()
 
 }
 
-void start::insertObjects()
+void start::insertObjects(int)
 {
 
 }
@@ -88,9 +89,8 @@ void start::doGravity()
 // intentinaly left empty
 }
 
-bool start::checkCollision()
+void start::checkCollision()
 {
-    return false;
 }
 
 void start::goStop()

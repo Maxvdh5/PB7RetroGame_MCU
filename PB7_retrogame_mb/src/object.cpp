@@ -1,9 +1,9 @@
 #include "object.h"
 
 
-#define jumpHeight 10
-#define maxVelosity 12
-#define moveSpeed 1
+#define jumpHeight 16
+#define maxVelosity 10
+#define moveSpeed 3
 
 Object::Object()
 {

@@ -2,11 +2,20 @@
 #include "object.h"
 #include "objectlist.h"
 
+
+#define size 20
+
 Level::Level()
 {
+
+}
+
+Level::Level(int levelSelect)
+{
     list = new objectList;
-    insertObjects();
+    insertObjects(levelSelect);
     nextState = 98;
+
 }
 
 Level::~Level()
@@ -27,18 +36,105 @@ void Level::update()
 
 }
 
-void Level::insertObjects()
+void Level::insertObjects(int levelSelect)
 {
-    for (int i = 0; i < 10; i++)
+
+    switch(levelSelect)
     {
-            list->insertObject(i*10,100,0,0,0,false,true,false);
+        case 0:
+        for(int i = 0; i<6; i++)
+        {
+            list->insertObject(i*size,18*size,0,0,0,false,true,false);
+        }
+        for(int i = 10; i <19; i++)
+        {
+            list->insertObject(i*size,17*size,0,0,0,false,true,false);
+        }
+        for(int i = 17; i < 21; i++)
+        {
+            list->insertObject(i*size,17*size,0,0,0,false,true,false);
+        }
+        for(int i = 21; i <24; i++)
+        {
+            list->insertObject(i*size,15*size,0,0,0,false,true,false);
+        }
+        for(int i = 15; i <18; i++)
+        {
+            list->insertObject(i*size,14*size,0,0,0,false,true,false);
+        }
+
+        for(int i = 22; i <26; i++)
+        {
+            list->insertObject(i*size,13*size,0,0,0,false,true,false);
+        }
+        for(int i = 14; i <18; i++)
+        {
+            list->insertObject(27*size,i*size,0,0,0,false,true,false);
+        }
+        for(int i = 28; i <31; i++)
+        {
+            list->insertObject(i*size,18*size,0,0,0,false,true,false);
+        }
+
+         list->insertObject(size*2,size*2,0,0,0,false,false,false);
+        //level 1
+
+
+
+
+
+        break;
+        case 1:
+
+        for(int i = 0; i<6; i++)
+        {
+            list->insertObject(i*size,18*size,0,0,0,false,true,false);
+        }
+        for(int i = 9; i <19; i++)
+        {
+            list->insertObject(i*size,17*size,0,0,0,false,true,false);
+        }
+        for(int i = 15; i < 19; i++)
+        {
+            list->insertObject(i*size,17*size,0,0,0,false,true,false);
+        }
+        for(int i = 21; i <24; i++)
+        {
+            list->insertObject(i*size,15*size,0,0,0,false,true,false);
+        }
+        for(int i = 15; i <18; i++)
+        {
+            list->insertObject(i*size,14*size,0,0,0,false,true,false);
+        }
+
+        for(int i = 22; i <26; i++)
+        {
+            list->insertObject(i*size,12*size,0,0,0,false,true,false);
+        }
+        for(int i = 14; i <18; i++)
+        {
+            list->insertObject(27*size,i*size,0,0,0,false,true,false);
+        }
+        for(int i = 28; i <31; i++)
+        {
+            list->insertObject(i*size,18*size,0,0,0,false,true,false);
+        }
+
+         list->insertObject(size*2,size*20,0,0,0,false,false,false);
+        //level 2
+
+
+
+        break;
+
+
+        case 2:
+        //level 3
+
+
+        break;
     }
 
-    list->insertObject(30,0,0,0,0,false,false,false);
-    list->insertObject(40,0,0,0,0,false,false,false);
-    list->insertObject(40,-20,0,0,0,false,false,false);
-
-    list->insertObject(10,0,0,0,0,false,false,false);
 
 }
 
@@ -53,58 +149,111 @@ void Level::doGravity()
 
 }
 
-bool Level::checkCollision()//+ directon
+void Level::checkCollision()//+ directon
 {
   Object * moving = list->getFirst();
+
+  if(moving->getY()>460||moving->getVelY()<-size)
+  {
+      nextState = 51;
+      return;
+  }
   Object * index =list->getFirst();
   while(moving != nullptr)
   {
       while(index != nullptr)
       {
-          if(index != moving)
+          if(index != moving && !moving->getIsStatic())
           {
-              if((moving->getX()+ moving->getVelX()) - index->getX() <= 10 && (moving->getY() - index->getY() < 10 && moving->getY() - index->getY() > -10 ))
+              if((moving->getX()+ moving->getVelX()) - index->getX() <= size && (moving->getY() - index->getY() < size && moving->getY() - index->getY() > -size ))
               {
 
                   if(moving->getVelX()<0 && moving->getX() > index->getX())
                   {
-                     moving->setVelX(((moving->getX()-index->getX())-10)*-1);
-                     if((moving == list->getFirst() || moving == list->getFirst()->getNext()) && index->getDeathly()){
-                         //do player killed stuff
+                     moving->setVelX(((moving->getX()-index->getX())-size)*-1);
+                     if(moving == list->getFirst())
+                     {
+                        if(index->getDeathly())
+                        {
+                            nextState = 51;
+                            return;
+                        }
+                        else if(index->getIsSelected())
+                        {
+                            nextState = 50;
+                            return;
+                        }
                      }
                   }
 
                   //moving->direction =  static_cast<Object::Direction>(moving->direction & ~moving->E);
               }
 
-              if((moving->getY() + moving->getVelY()) - index->getY()  >= -10 && (moving->getX() - index->getX() < 10 && moving->getX() - index->getX() > -10 ))
+              if((moving->getY() + moving->getVelY()) - index->getY()  >= -size && (moving->getX() - index->getX() < size && moving->getX() - index->getX() > -size ))
               {
 
                   if(moving->getVelY() >0 && moving->getY() < index->getY())
                   {
-                      moving->setVelY(((moving->getY()-index->getY())+10)*-1);
+                      moving->setVelY(((moving->getY()-index->getY())+size)*-1);
+                      if(moving == list->getFirst())
+                      {
+                         if(index->getDeathly())
+                         {
+                             nextState = 51;
+                             return;
+                         }
+                         else if(index->getIsSelected())
+                         {
+                             nextState = 50;
+                             return;
+                         }
+                      }
                   }
 
                  //moving->direction = static_cast<Object::Direction>(moving->direction & ~moving->S);
               }
 
-              if((moving->getX() + moving->getVelX()) - index->getX()  >= -10 && (moving->getY() - index->getY() < 10 && moving->getY() - index->getY() > -10 ))
+              if((moving->getX() + moving->getVelX()) - index->getX()  >= -size && (moving->getY() - index->getY() < size && moving->getY() - index->getY() > -size ))
               {
 
                   if(moving->getVelX()>0 && moving->getX() < index->getX())
                   {
-                    moving->setVelX(((moving->getX()-index->getX())+10)*-1);
+                    moving->setVelX(((moving->getX()-index->getX())+size)*-1);
+                    if(moving == list->getFirst())
+                    {
+                       if(index->getDeathly())
+                       {
+                           nextState = 51;
+                           return;
+                       }
+                       else if(index->getIsSelected())
+                       {
+                           nextState = 50;
+                           return;
+                       }
+                    }
                   }
 
                   //moving->direction = static_cast<Object::Direction>(moving->direction & ~moving->W);
               }
 
-              if((moving->getY() + moving->getVelY() ) - index->getY() <= 10 && (moving->getX() - index->getX() < 10 && moving->getX() - index->getX() > -10 ))
+              if((moving->getY() + moving->getVelY() ) - index->getY() <= size && (moving->getX() - index->getX() < size && moving->getX() - index->getX() > -size ))
               {
 
                   if(moving->getVelY() < 0 && moving->getY() > index->getY())
                   {
-                    moving->setVelY(((moving->getY()-index->getY())+10)*-1);
+                    moving->setVelY(((moving->getY()-index->getY())-size)*-1);
+                    if(moving == list->getFirst())
+                    {
+                       if(index->getDeathly())
+                       {
+                           nextState = 51;
+                       }
+                       else if(index->getIsSelected())
+                       {
+                           nextState = 50;
+                       }
+                    }
                   }
 
                   //moving->direction = static_cast<Object::Direction>(moving->direction & ~moving->N);
@@ -145,7 +294,7 @@ void Level::jump(Object * moving)
     {
         if(index != moving)
         {
-            if(moving->getY()  - index->getY()  >= -10 && (moving->getX() - index->getX() < 10 && moving->getX() - index->getX() > -10 ))
+            if(moving->getY()  - index->getY()  >= -size && (moving->getX() - index->getX() < size && moving->getX() - index->getX() > -size ))
             {
                 moving->moveUp();
                 return;

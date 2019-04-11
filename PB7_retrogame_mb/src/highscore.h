@@ -9,9 +9,9 @@ public:
 
 
     void update() override;
-    void insertObjects() override;
+    void insertObjects(int) override;
     void doGravity() override;
-    bool checkCollision() override;
+    void checkCollision() override;
 
     void jump(Object *) override;
 

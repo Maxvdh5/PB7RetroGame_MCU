@@ -32,6 +32,8 @@ private:
     States * states;
     int locIndex;
     int index;
+    int levelSelector;
+    int death;
     objectList * objects;
 
 };

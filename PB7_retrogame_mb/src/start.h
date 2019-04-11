@@ -22,9 +22,9 @@ public:
     void goLeft() override;
     void goRight() override;
     void update() override;
-    void insertObjects() override;
+    void insertObjects(int) override;
     void doGravity() override;
-    bool checkCollision() override;
+    void checkCollision() override;
     void goStop() override;
 
     void jump(Object *) override;

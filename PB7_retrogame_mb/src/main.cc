@@ -11,7 +11,7 @@ GpioHandler *buttonHandler;
 GpioHandler *vgaHandler;
 
 void buttonCallback(u8 data) {
-//	xil_printf("button press: %d\r\n", data);
+	xil_printf("button press: %d\r\n", data);
 	game->inputHandeler(data);
 
 }

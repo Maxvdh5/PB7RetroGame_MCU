@@ -10,7 +10,7 @@ void Highscore::update()
 
 }
 
-void Highscore::insertObjects()
+void Highscore::insertObjects(int)
 {
 
 }
@@ -20,9 +20,8 @@ void Highscore::doGravity()
 
 }
 
-bool Highscore::checkCollision()
+void Highscore::checkCollision()
 {
-    return false;
 }
 
 void Highscore::jump(Object *)
