@@ -78,7 +78,7 @@ void Level::insertObjects(int levelSelect)
 
         list->insertObject(size*30,size*17,0,0,0,false,false,false);
 
-         list->insertObject(size*2,size*2,0,0,0,false,false,false);
+         list->insertObject(size*2,size*2,0,0,2,false,false,false);
         //level 1
 
 
@@ -122,7 +122,7 @@ void Level::insertObjects(int levelSelect)
             list->insertObject(i*size,18*size,0,0,0,false,true,false);
         }
 
-         list->insertObject(size*2,size*20,0,0,0,false,false,false);
+         list->insertObject(size*2,size*20,0,0,2,false,false,false);
         //level 2
 
 
