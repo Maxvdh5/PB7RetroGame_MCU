@@ -16,9 +16,19 @@ start::~start()
 
 void start::createObjects()
 {
-    list->insertObject(30,70,0,0,1,false,true,false);
-    list->insertObject(30,50,0,0,1,false,true,false);
-    list->insertObject(30,30,0,0,1,false,true,true);
+    int mainBlockX = 230;
+    int mainBlockY;
+
+    for(int hor = 0; hor < 9; hor++)
+    {
+    	mainBlockY = 200;
+   	  for(int ver = 0; ver < 4; ver++)
+   	  {
+   	    list->insertObject(mainBlockX, mainBlockY,0,0,3,false,true,false);
+        mainBlockY += 20;
+   	  }
+   	  mainBlockX += 20;
+    }
 }
 
 void start::goDown()
