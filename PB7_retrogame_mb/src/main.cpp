@@ -6,7 +6,6 @@
 #include "xil_printf.h"
 #include <cassert>
 
-//TODO: improve collission gap
 //TODO: push blocks
 //TODO: player deaths
 //TODO: push block fall off screen

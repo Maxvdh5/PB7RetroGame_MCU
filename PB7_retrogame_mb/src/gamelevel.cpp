@@ -54,9 +54,7 @@ bool GameLevel::checkCollission()
 		gap						= (0 > gap) ? -gap : gap; // get absolute gap
 		gap						= gap - BLOCK_SIZE;
 
-		if (0 == gap)
-			return int8_t(0);
-		else if (0 > gap)
+		if (0 > gap)
 			return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
 
 		return (dyn->*velAxis);
