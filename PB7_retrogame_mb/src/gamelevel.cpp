@@ -43,8 +43,7 @@ bool GameLevel::checkCollission()
 				((dyn->*axis)+BLOCK_SIZE > (col->*axis) && (dyn->*axis)+BLOCK_SIZE <= (col->*axis)+BLOCK_SIZE));
 	};
 
-	auto calculateNewVelocity = [] (MoveableBlock *dyn, Block *col, bool colIsDynamic = false,
-			int8_t MoveableBlock::*velAxis)
+	auto calculateNewVelocity = [this] (MoveableBlock *dyn, Block *col, int8_t MoveableBlock::*velAxis)
 	{
 		if (0 == (dyn->*velAxis))
 			return int8_t(0);
@@ -55,15 +54,37 @@ bool GameLevel::checkCollission()
 		gap						= (0 > gap) ? -gap : gap; // get absolute gap
 		gap						= gap - BLOCK_SIZE;
 
-		if (0 > gap && !colIsDynamic)
-			return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
-		// set moveable block velocity
-		else if (0 > gap && colIsDynamic)
-			(reinterpret_cast<MoveableBlock*>(col)->*velAxis) = (dyn->*velAxis);
 
+		if (0 >= gap) {
+			switch (col->type) {
+				case BLOCK_STATIC_FINISH:
+					if (BLOCK_DYNAMIC_PLAYER == dyn->type)
+						m_state = LEVEL_FINISH;
+					break;
+				case BLOCK_DYNAMIC_PUSH:
+					// only allow pushing on X axis.
+					if (&MoveableBlock::velX == velAxis)
+					{
+						(reinterpret_cast<MoveableBlock*>(col)->*velAxis) = (dyn->*velAxis);
+						break;
+					}
+					break;
+				case BLOCK_STATIC_FLOOR:
+					if (BLOCK_DYNAMIC_PLAYER == dyn->type)
+						m_state	= LEVEL_DEATH;
+					dyn->type	= BLOCK_DISABLED;
+				default:
+					return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
+					break;
+			}
+		}
 		return (dyn->*velAxis);
 	};
 
+
+	Block	leftWall	= Block({0-BLOCK_SIZE,0-BLOCK_SIZE,BLOCK_STATIC_ENV});
+	Block	rightWall	= Block({SCREEN_MAX_W,0-BLOCK_SIZE,BLOCK_STATIC_ENV});
+	Block	floor		= Block({-BLOCK_SIZE,SCREEN_MAX_H+BLOCK_SIZE,BLOCK_STATIC_FLOOR});
 
 	for (uint8_t di = 0; di < MAX_DYNAMIC_BLOCKS; di++) {
 		if (BLOCK_DISABLED == m_blocks[di]->type)
@@ -78,13 +99,17 @@ bool GameLevel::checkCollission()
 			bool yAligned	= determineAlignment(dynBlock, m_blocks[bi], &Block::y);
 			// horizontal
 			if (yAligned)
-				dynBlock->velX	= calculateNewVelocity(dynBlock, m_blocks[bi],
-						(bi < MAX_DYNAMIC_BLOCKS), &MoveableBlock::velX);
+				dynBlock->velX	= calculateNewVelocity(dynBlock, m_blocks[bi], &MoveableBlock::velX);
 			// vertical
 			if (xAligned)
-				dynBlock->velY	= calculateNewVelocity(dynBlock, m_blocks[bi],
-						false, &MoveableBlock::velY);
+				dynBlock->velY	= calculateNewVelocity(dynBlock, m_blocks[bi], &MoveableBlock::velY);
 		}
+		// keep dynBlock within the screen borders
+		dynBlock->velX			= calculateNewVelocity(dynBlock, &leftWall, &MoveableBlock::velX);
+		dynBlock->velX			= calculateNewVelocity(dynBlock, &rightWall, &MoveableBlock::velX);
+		// using the top of left wall as ceiling
+		dynBlock->velY			= calculateNewVelocity(dynBlock, &leftWall, &MoveableBlock::velY);
+		dynBlock->velY			= calculateNewVelocity(dynBlock, &floor, &MoveableBlock::velY);
 	}
 	return true;
 }

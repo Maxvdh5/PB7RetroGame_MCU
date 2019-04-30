@@ -10,6 +10,7 @@ enum BLOCKTYPE {
     BLOCK_DYNAMIC_PUSH    = 2,
     BLOCK_STATIC_FINISH   = 3,
     BLOCK_STATIC_SPRITE   = 4,
+    BLOCK_STATIC_FLOOR	  = 5,
 };
 
 struct BLOCKDATA {

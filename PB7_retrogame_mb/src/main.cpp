@@ -7,7 +7,6 @@
 #include <cassert>
 
 //TODO: player deaths
-//TODO: push block fall off screen
 //TODO: finish -> next level
 //TODO: reset button
 //TODO: prevent double jump
