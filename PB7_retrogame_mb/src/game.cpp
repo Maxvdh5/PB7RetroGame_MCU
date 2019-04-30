@@ -17,7 +17,6 @@ void Game::runFrame(GpioHandler *targetGpio)
         return;
     case GAME_LEVEL:
         gameLevel->update();
-        gameLevel->writeLocationData(targetGpio);
         break;
     case MAIN_MENU:
         break;
