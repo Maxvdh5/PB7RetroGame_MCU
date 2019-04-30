@@ -14,4 +14,9 @@ void MoveableBlock::updatePosition()
 
 	if (MAX_VELOCITY > velY)
 		velY++;
+
+	if (0 > velX)
+		velX++;
+	else if (0 < velX)
+		velX--;
 }

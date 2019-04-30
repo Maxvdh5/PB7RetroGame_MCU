@@ -6,11 +6,12 @@
 #include "xil_printf.h"
 #include <cassert>
 
-//TODO: push blocks
 //TODO: player deaths
 //TODO: push block fall off screen
 //TODO: finish -> next level
 //TODO: reset button
+//TODO: prevent double jump
+//TODO: fix moveable block clipping
 
 Game 		*game;
 GpioHandler *buttonHandler;

@@ -8,7 +8,7 @@
 
 #define PLAYER_JUMP_HEIGHT  10
 #define MAX_VELOCITY        10
-#define PLAYER_MOVE_SPEED   3
+#define PLAYER_MOVE_SPEED   5
 #define PLAYER_LIVES        3
 
 #endif // CONFIG_H

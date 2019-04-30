@@ -43,7 +43,8 @@ bool GameLevel::checkCollission()
 				((dyn->*axis)+BLOCK_SIZE > (col->*axis) && (dyn->*axis)+BLOCK_SIZE <= (col->*axis)+BLOCK_SIZE));
 	};
 
-	auto calculateNewVelocity = [] (MoveableBlock *dyn, Block *col, int8_t MoveableBlock::*velAxis)
+	auto calculateNewVelocity = [] (MoveableBlock *dyn, Block *col, bool colIsDynamic = false,
+			int8_t MoveableBlock::*velAxis)
 	{
 		if (0 == (dyn->*velAxis))
 			return int8_t(0);
@@ -54,8 +55,11 @@ bool GameLevel::checkCollission()
 		gap						= (0 > gap) ? -gap : gap; // get absolute gap
 		gap						= gap - BLOCK_SIZE;
 
-		if (0 > gap)
+		if (0 > gap && !colIsDynamic)
 			return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
+		// set moveable block velocity
+		else if (0 > gap && colIsDynamic)
+			(reinterpret_cast<MoveableBlock*>(col)->*velAxis) = (dyn->*velAxis);
 
 		return (dyn->*velAxis);
 	};
@@ -74,10 +78,12 @@ bool GameLevel::checkCollission()
 			bool yAligned	= determineAlignment(dynBlock, m_blocks[bi], &Block::y);
 			// horizontal
 			if (yAligned)
-				dynBlock->velX	= calculateNewVelocity(dynBlock, m_blocks[bi], &MoveableBlock::velX);
+				dynBlock->velX	= calculateNewVelocity(dynBlock, m_blocks[bi],
+						(bi < MAX_DYNAMIC_BLOCKS), &MoveableBlock::velX);
 			// vertical
 			if (xAligned)
-				dynBlock->velY	= calculateNewVelocity(dynBlock, m_blocks[bi], &MoveableBlock::velY);
+				dynBlock->velY	= calculateNewVelocity(dynBlock, m_blocks[bi],
+						false, &MoveableBlock::velY);
 		}
 	}
 	return true;
