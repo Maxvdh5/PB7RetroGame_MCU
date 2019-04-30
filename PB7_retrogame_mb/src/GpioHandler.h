@@ -32,6 +32,8 @@ public:
     // write data to GPIO channel 1
     // param:   data:   Mask for the GPIO channel
 	void 	write(u32 data);
+	// read data on GPIO channel 2
+	u32		read();
 
 private:
 	XGpio	Gpio;

@@ -6,7 +6,6 @@
 #include "xil_printf.h"
 #include <cassert>
 
-//TODO: replace button interupt with a single read before readframe
 //TODO: improve collission gap
 //TODO: push blocks
 //TODO: player deaths
@@ -20,13 +19,14 @@ GpioHandler *vgaHandler;
 
 void buttonCallback(u8 data) {
 	xil_printf("button press: %d\r\n", data);
-	game->handleUserInput(data);
+//	game->handleUserInput(data);
 
 }
 
 void vgaCallback(u8 data) {
 	if(1 == data)
 	{
+		game->handleUserInput(buttonHandler->read() & 0xFF);
 		game->runFrame(vgaHandler);
 	}
 }
