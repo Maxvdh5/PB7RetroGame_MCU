@@ -6,7 +6,6 @@
 #include "xil_printf.h"
 #include <cassert>
 
-//TODO: reset button
 //TODO: prevent double jump
 //TODO: fix moveable block clipping
 //TODO: fix frame drops on button press/direction invert

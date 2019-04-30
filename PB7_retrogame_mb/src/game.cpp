@@ -70,6 +70,12 @@ void Game::processLevelState()
 
 void Game::handleUserInput(uint8_t inputData)
 {
+	/*
+	 * inputData:
+	 * [7:4][  3  ][  2  ][  1 ][0 ]
+	 *   -   Reset  Right  Left  Up
+	 */
+
     // drop user input if SWITCHING_LEVEL
     if (SWITCHING_LEVEL == currentState)
         return;
@@ -77,14 +83,20 @@ void Game::handleUserInput(uint8_t inputData)
     static uint8_t		oldInputData	= 0x0;
     uint8_t				dirUp			= (inputData^oldInputData)&0x1;
     uint8_t				dirLeftRight	= (inputData >> 1) & 0x3;
+    uint8_t				reset			= (inputData >> 3) & 0x1;
     PLAYER_DIRECTION    direction   	= PLAYER_DIR_NONE;
 
     oldInputData						= inputData;
 
+    if (reset)
+    {
+        switchLevel();
+        return;
+    }
+
     if (dirUp)
     	gameLevel->movePlayerBlock(PLAYER_DIR_UP);
 
-    // inputData: [0000DRLU]
     switch (dirLeftRight) {
     case 0x1:
         direction   = PLAYER_DIR_LEFT;
