@@ -27,6 +27,7 @@ private:
     uint8_t     playerLives;
 
     void        switchLevel();
+    void		processLevelState();
 };
 
 #endif // GAME_H

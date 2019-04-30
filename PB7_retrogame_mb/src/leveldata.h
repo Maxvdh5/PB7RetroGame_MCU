@@ -5,7 +5,9 @@
 #include "block.h"
 #include <cstdint>
 
-const BLOCKDATA   blockLocations[2][MAX_STATIC_BLOCKS+MAX_DYNAMIC_BLOCKS] = {
+#define LEVEL_COUNT	2
+
+const BLOCKDATA   blockLocations[LEVEL_COUNT][MAX_STATIC_BLOCKS+MAX_DYNAMIC_BLOCKS] = {
 // mainemenulevel.bmp
 {
 { -1, -1,1},{ -1,-1,-1},{ -1,-1,-1},{ -1,-1,-1},{ -1,-1,-1},{ -1,-1,-1},{ -1,-1,-1},{ -1,-1,-1},

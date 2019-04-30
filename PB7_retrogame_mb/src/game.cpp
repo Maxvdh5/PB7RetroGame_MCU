@@ -1,5 +1,6 @@
 #include "game.h"
 #include "gamelevel.h"
+#include "leveldata.h"
 
 Game::Game()
 {
@@ -17,6 +18,7 @@ void Game::runFrame(GpioHandler *targetGpio)
         return;
     case GAME_LEVEL:
         gameLevel->update();
+        processLevelState();
         break;
     case MAIN_MENU:
         break;
@@ -40,6 +42,30 @@ void Game::switchLevel()
     }
 
     currentState        = GAME_LEVEL;
+}
+
+void Game::processLevelState()
+{
+	switch (gameLevel->m_state) {
+		case LEVEL_INPROGRESS:
+			return;
+		case LEVEL_DEATH:
+			if (0 >= --playerLives)
+			{
+				//TODO: GAME OVER level
+				playerLives			= PLAYER_LIVES;
+				currentLevelIndex	= 0; // back to main menu
+			}
+			break;
+		case LEVEL_FINISH:
+			if (LEVEL_COUNT <= ++currentLevelIndex)
+				//TODO: highscore/victory level
+				currentLevelIndex	= 0; // back to main menu
+			break;
+		default:
+			break;
+	}
+	switchLevel();
 }
 
 void Game::handleUserInput(uint8_t inputData)

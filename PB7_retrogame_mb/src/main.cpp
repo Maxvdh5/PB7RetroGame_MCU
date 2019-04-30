@@ -6,11 +6,10 @@
 #include "xil_printf.h"
 #include <cassert>
 
-//TODO: player deaths
-//TODO: finish -> next level
 //TODO: reset button
 //TODO: prevent double jump
 //TODO: fix moveable block clipping
+//TODO: fix frame drops on button press/direction invert
 
 Game 		*game;
 GpioHandler *buttonHandler;
@@ -18,7 +17,6 @@ GpioHandler *vgaHandler;
 
 void buttonCallback(u8 data) {
 	xil_printf("button press: %d\r\n", data);
-//	game->handleUserInput(data);
 
 }
 
