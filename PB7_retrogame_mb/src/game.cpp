@@ -1,149 +1,120 @@
 #include "game.h"
-#include "objectlist.h"
-#include "object.h"
-#include "level.h"
-#include "start.h"
-#include "highscore.h"
-#include "states.h"
-#include "GpioHandler.h"
-
+#include "gamelevel.h"
+#include "leveldata.h"
 
 Game::Game()
 {
-    this->exit = false;
-    states = new start();
-    this->objects = nullptr;
-    this->index = 0;
-    this->locIndex = 0;
-    this->levelSelector = 0;
-    this->death = 0;
+    currentLevelIndex   = 0;
+    playerLives         = PLAYER_LIVES;
+    gameLevel           = nullptr;
+
+    switchLevel();
 }
 
-Game::~Game()
+void Game::runFrame(GpioHandler *targetGpio)
 {
-
+    switch (currentState) {
+    case SWITCHING_LEVEL:
+        return;
+    case GAME_LEVEL:
+        gameLevel->update();
+        processLevelState();
+        break;
+    case MAIN_MENU:
+        break;
+    }
+    gameLevel->writeLocationData(targetGpio);
 }
 
-bool Game::getExit()
+void Game::switchLevel()
 {
-    return this->exit;
-}
+    currentState        = SWITCHING_LEVEL;
 
-void Game::runFrame()
-{
-    index = locIndex;
+    if (nullptr != gameLevel)
+        delete gameLevel;
 
-    switch(index)
+    gameLevel           = new GameLevel(currentLevelIndex);
+
+    if (currentLevelIndex == 0)
     {
-    case 0:
-        delete states;
-        states = new start();
-        locIndex = startState();
-        break;
+        currentState    = MAIN_MENU;
+        return;
+    }
 
-    case 1:
-        delete states;
-        states = new Level(levelSelector) ;
-        locIndex = levelState();
-        break;
+    currentState        = GAME_LEVEL;
+}
 
-    case 10:
-        //win scherm
-        locIndex = 0;
-        break;
+void Game::processLevelState()
+{
+	switch (gameLevel->m_state) {
+		case LEVEL_INPROGRESS:
+			return;
+		case LEVEL_DEATH:
+			if (0 >= --playerLives)
+			{
+				//TODO: GAME OVER level
+				playerLives			= PLAYER_LIVES;
+				currentLevelIndex	= 0; // back to main menu
+			}
+			break;
+		case LEVEL_FINISH:
+			if (LEVEL_COUNT <= ++currentLevelIndex)
+				//TODO: highscore/victory level
+				currentLevelIndex	= 0; // back to main menu
+			break;
+		default:
+			break;
+	}
+	switchLevel();
+}
 
-    case 11:
-        //gameover scherm
-    	death = 0;
-        locIndex = 0;
-        break;
+void Game::handleUserInput(uint8_t inputData)
+{
+	/*
+	 * inputData:
+	 * [7:4][  3  ][  2  ][  1 ][0 ]
+	 *   -   Reset  Right  Left  Up
+	 */
 
-    case 50: //level won
-        if(levelSelector < 2)//aantal levels
+    // drop user input if SWITCHING_LEVEL
+    if (SWITCHING_LEVEL == currentState)
+        return;
+
+    static uint8_t		oldInputData	= 0x0;
+    uint8_t				dirUp			= (inputData^oldInputData)&0x1;
+    uint8_t				dirLeftRight	= (inputData >> 1) & 0x3;
+    uint8_t				reset			= (inputData >> 3) & 0x1;
+    PLAYER_DIRECTION    direction   	= PLAYER_DIR_NONE;
+
+    oldInputData						= inputData;
+
+    if (reset)
+    {
+        switchLevel();
+        return;
+    }
+
+    if (dirUp)
+    	gameLevel->movePlayerBlock(PLAYER_DIR_UP);
+
+    switch (dirLeftRight) {
+    case 0x1:
+        direction   = PLAYER_DIR_LEFT;
+        break;
+    case 0x2:
+        direction   = PLAYER_DIR_RIGHT;
+
+        if (MAIN_MENU == currentState)
         {
-            levelSelector++;
-            locIndex = 1;
-        }
-        else
-        {
-            locIndex = 10;
+            currentLevelIndex++;
+            switchLevel();
+            return;
         }
         break;
-     case 51:   //gameover
-        death++;
-
-        if(death <= 3)
-        {
-            locIndex = 1;
-        }
-        else
-        {
-            locIndex = 11;
-        }
-        break;
-
-    case 98: locIndex = levelState(); break;
-    case 99: locIndex = startState(); break;
+    case 0x3:
+    	direction	= PLAYER_DIR_NONE;
+    	break;
     }
 
-
+    gameLevel->movePlayerBlock(direction);
 }
-
-void Game::writeFrame(GpioHandler *targetGpio)
-{
-    this->objects = this->states->getObjects();
-    this->objects->printObjects(targetGpio);
-       //this->exit = true;
-}
-
-int Game::startState()
-{
-    //do interupt stuff
-    return this->states->doSelected();
-}
-
-int Game::levelState()
-{
-    //do interupt stuff
-    this->states->doGravity();
-    this->states->checkCollision();
-    this->states->update();
-    return this->states->doSelected();
-}
-
-int Game::highscoreState()
-{
-    return 0;
-}
-
-void Game::inputHandeler(unsigned char input)
-{
-    if(IsBitSet(input,3))
-    {
-        this->states->goDown();
-    }
-    if(IsBitSet(input,2))
-    {
-        this->states->goRight();
-    }
-    if(IsBitSet(input,1))
-    {
-        this->states->goLeft();
-    }
-    if(IsBitSet(input,0))
-    {
-        this->states->jump(this->states->getObjects()->getFirst());
-    }
-    if(input == 0)
-    {
-    	this->states->goStop();
-    }
-}
-
-bool Game::IsBitSet(unsigned char byte, int index)
-{
-    int mask = 1<<index;
-    return (byte & mask) != 0;
-}
-
-

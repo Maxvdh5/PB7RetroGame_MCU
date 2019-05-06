@@ -6,22 +6,24 @@
 #include "xil_printf.h"
 #include <cassert>
 
+//TODO: prevent double jump
+//TODO: fix moveable block clipping
+//TODO: fix frame drops on button press/direction invert
+
 Game 		*game;
 GpioHandler *buttonHandler;
 GpioHandler *vgaHandler;
 
 void buttonCallback(u8 data) {
 	xil_printf("button press: %d\r\n", data);
-	game->inputHandeler(data);
 
 }
 
 void vgaCallback(u8 data) {
 	if(1 == data)
 	{
-		game->writeFrame(vgaHandler);
-		game->runFrame();
-//		xil_printf("vga callback\r\n");
+		game->handleUserInput(buttonHandler->read() & 0xFF);
+		game->runFrame(vgaHandler);
 	}
 }
 

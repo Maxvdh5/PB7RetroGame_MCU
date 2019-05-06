@@ -76,6 +76,11 @@ void GpioHandler::write(u32 data)
 	XGpio_DiscreteWrite(&Gpio, OUTPUT_CHANNEL, data);
 }
 
+u32 GpioHandler::read()
+{
+	return XGpio_DiscreteRead(&Gpio, INTR_CHANNEL);
+}
+
 bool GpioHandler::InitializeInterruptController(XIntc *Intc, u8 intrId)
 {
 	int Status;
