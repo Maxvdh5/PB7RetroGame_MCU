@@ -10,6 +10,23 @@
 //TODO: fix moveable block clipping
 //TODO: fix frame drops on button press/direction invert
 
+
+
+/*! \mainpage GameLogic
+ *
+ * In this document the microcontroller code for the game "TetrisPlatformer 2" is explained.
+ \dot
+ digraph example{
+ node[shape=record, fontname=Helvetica, fontsize=10];
+ b [label="class cell_deinterleaver"  URL= "\ref Cell_deinterleaver" ];
+ c [label="class freq_deinterleaver" URL= "\ref freq_deinterleaver" ];
+ b -> c [arrowhead= "open", style = "dashed"];
+ }
+ \enddot
+ *
+ */
+
+
 Game 		*game;
 GpioHandler *buttonHandler;
 GpioHandler *vgaHandler;

@@ -21,6 +21,8 @@ class Block;
 class MoveableBlock;
 class GpioHandler;
 
+/** Contains the gamestate and every object of a level **/
+
 class GameLevel
 {
 public:
@@ -35,11 +37,11 @@ private:
     bool            checkCollission();
 
 public:
-    LEVEL_STATE     m_state;
+    LEVEL_STATE     m_state; ///< Stores the state the game is in
 
-    bool            update();
-    bool            movePlayerBlock(PLAYER_DIRECTION direction);
-    bool            writeLocationData(GpioHandler* targetGpio);
+    bool            update();///<updates a frame
+    bool            movePlayerBlock(PLAYER_DIRECTION direction);///< moves player
+    bool            writeLocationData(GpioHandler* targetGpio);///<changes location data of every dynamic object
 };
 
 #endif // GAMELEVEL_H

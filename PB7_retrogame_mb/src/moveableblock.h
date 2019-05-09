@@ -3,16 +3,18 @@
 
 #include "block.h"
 
+/** A special type of Block that is dynamic **/
+
 class MoveableBlock : public Block
 {
 public:
-    MoveableBlock(struct BLOCKDATA data);
+    MoveableBlock(struct BLOCKDATA data); ///< calls the constructor of Block and adds velocity
 
 public:
-    int8_t      velX;
-    int8_t      velY;
+    int8_t      velX; ///< The horizontal velocity for the next update
+    int8_t      velY; ///< The vertical velocity for the next update
 
-    void        updatePosition();
+    void        updatePosition(); ///< Update the Block's velocity
 };
 
 #endif // MOVEABLEBLOCK_H

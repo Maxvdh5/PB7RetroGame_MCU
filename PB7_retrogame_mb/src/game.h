@@ -4,6 +4,8 @@
 #include <cstdint>
 #include "config.h"
 
+
+
 enum GAMESTATE {
     MAIN_MENU = 0,
     GAME_LEVEL,
@@ -13,12 +15,15 @@ enum GAMESTATE {
 class GameLevel;
 class GpioHandler;
 
+
+/** the Game class handels all the game logic
+**/
 class Game
 {
 public:
     Game();
-    void        runFrame(GpioHandler *targetGpio);
-    void        handleUserInput(uint8_t inputData);
+    void        runFrame(GpioHandler *targetGpio); ///< runs the game for one frame
+    void        handleUserInput(uint8_t inputData); ///< is called when an input interupt is recieved
 
 private:
     GAMESTATE   currentState;
