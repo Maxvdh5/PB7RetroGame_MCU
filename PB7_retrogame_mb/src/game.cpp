@@ -90,6 +90,9 @@ void Game::handleUserInput(uint8_t inputData)
 
     if (reset)
     {
+    	// go to _next_ level if pressed in main menu.
+    	currentLevelIndex	+= (MAIN_MENU == currentState);
+    	// go to _current_ level otherwise.
         switchLevel();
         return;
     }
@@ -103,13 +106,6 @@ void Game::handleUserInput(uint8_t inputData)
         break;
     case 0x2:
         direction   = PLAYER_DIR_RIGHT;
-
-        if (MAIN_MENU == currentState)
-        {
-            currentLevelIndex++;
-            switchLevel();
-            return;
-        }
         break;
     case 0x3:
     	direction	= PLAYER_DIR_NONE;
