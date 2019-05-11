@@ -25,7 +25,6 @@ class Block
 public:
     Block(struct BLOCKDATA data); ///< Creates a new block
 
-// TODO: getters?
 public:
     int16_t    x; ///< Horizontal position
     int16_t    y; ///< Vertical Position
