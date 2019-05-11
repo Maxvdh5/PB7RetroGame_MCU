@@ -13,6 +13,7 @@ Game::Game()
 
 void Game::runFrame(GpioHandler *targetGpio)
 {
+    gameLevel->writeLocationData(targetGpio);
     switch (currentState) {
     case SWITCHING_LEVEL:
         return;
@@ -23,7 +24,6 @@ void Game::runFrame(GpioHandler *targetGpio)
     case MAIN_MENU:
         break;
     }
-    gameLevel->writeLocationData(targetGpio);
 }
 
 void Game::switchLevel()
