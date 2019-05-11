@@ -9,8 +9,10 @@ MoveableBlock::MoveableBlock(struct BLOCKDATA data) : Block(data)
 
 void MoveableBlock::updatePosition()
 {
-	x		+=	velX;
-	y		+=	velY;
+	x			+=	velX;
+	y			+=	velY;
+
+	isAirborne	= 	(0 != velY);
 
 	if (MAX_VELOCITY > velY)
 		velY++;

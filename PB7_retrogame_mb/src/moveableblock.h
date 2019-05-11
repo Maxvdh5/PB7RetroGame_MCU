@@ -13,6 +13,7 @@ public:
 public:
     int8_t      velX; ///< The horizontal velocity for the next update
     int8_t      velY; ///< The vertical velocity for the next update
+    bool        isAirborne; ///< Whether the Block is moving on the y-axis
 
     void        updatePosition(); ///< Update the Block's velocity
 };

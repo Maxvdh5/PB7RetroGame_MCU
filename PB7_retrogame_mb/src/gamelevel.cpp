@@ -126,7 +126,7 @@ bool GameLevel::movePlayerBlock(PLAYER_DIRECTION direction)
 {
     switch (direction) {
     case PLAYER_DIR_UP:
-//        if (0 > m_playerBlock->velY)
+        if (!m_playerBlock->isAirborne)
             m_playerBlock->velY = -PLAYER_JUMP_HEIGHT;
         break;
     case PLAYER_DIR_LEFT:
