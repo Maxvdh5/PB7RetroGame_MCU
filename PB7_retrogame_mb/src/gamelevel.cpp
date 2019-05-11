@@ -61,18 +61,19 @@ bool GameLevel::checkCollission()
 					if (BLOCK_DYNAMIC_PLAYER == dyn->type)
 						m_state = LEVEL_FINISH;
 					break;
+				// TODO: fix visible gap while pushing on X-axis
 				case BLOCK_DYNAMIC_PUSH:
 					// only allow pushing on X axis.
 					if (&MoveableBlock::velX == velAxis)
-					{
 						(reinterpret_cast<MoveableBlock*>(col)->*velAxis) = (dyn->*velAxis);
-						break;
-					}
+					return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
 					break;
 				case BLOCK_STATIC_FLOOR:
 					if (BLOCK_DYNAMIC_PLAYER == dyn->type)
 						m_state	= LEVEL_DEATH;
 					dyn->type	= BLOCK_DISABLED;
+				case BLOCK_DYNAMIC_PLAYER:
+					break;
 				default:
 					return static_cast<int8_t>((dyn->*velAxis)+(direction*gap));
 					break;
