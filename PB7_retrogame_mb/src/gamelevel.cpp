@@ -3,7 +3,7 @@
 #include "moveableblock.h"
 #include "GpioHandler.h"
 
-GameLevel::GameLevel(uint8_t levelIndex)
+GameLevel::GameLevel(uint8_t levelIndex, bool cheatMode)
 {
     uint8_t i;
     for (i = 0; i < MAX_DYNAMIC_BLOCKS; i++) {
@@ -14,7 +14,8 @@ GameLevel::GameLevel(uint8_t levelIndex)
     }
 
     m_playerBlock	= reinterpret_cast<MoveableBlock*>(m_blocks[0]);
-    m_state = LEVEL_INPROGRESS;
+    m_cheatMode     = cheatMode;
+    m_state         = LEVEL_INPROGRESS;
 }
 
 GameLevel::~GameLevel()
@@ -126,7 +127,7 @@ bool GameLevel::movePlayerBlock(PLAYER_DIRECTION direction)
 {
     switch (direction) {
     case PLAYER_DIR_UP:
-        if (!m_playerBlock->isAirborne)
+        if (!m_playerBlock->isAirborne || m_cheatMode)
             m_playerBlock->velY = -PLAYER_JUMP_HEIGHT;
         break;
     case PLAYER_DIR_LEFT:

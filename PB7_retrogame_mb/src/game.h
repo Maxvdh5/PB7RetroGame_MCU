@@ -31,7 +31,7 @@ private:
     uint8_t     currentLevelIndex;
     uint8_t     playerLives;
 
-    void        switchLevel();
+    void        switchLevel(bool cheatMode = false);
     void		processLevelState();
 };
 

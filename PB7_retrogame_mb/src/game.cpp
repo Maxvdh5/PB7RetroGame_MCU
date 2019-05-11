@@ -26,14 +26,14 @@ void Game::runFrame(GpioHandler *targetGpio)
     }
 }
 
-void Game::switchLevel()
+void Game::switchLevel(bool cheatMode)
 {
     currentState        = SWITCHING_LEVEL;
 
     if (nullptr != gameLevel)
         delete gameLevel;
 
-    gameLevel           = new GameLevel(currentLevelIndex);
+    gameLevel           = new GameLevel(currentLevelIndex, cheatMode);
 
     if (currentLevelIndex == 0)
     {
@@ -84,6 +84,7 @@ void Game::handleUserInput(uint8_t inputData)
     uint8_t				dirUp			= (inputData^oldInputData)&0x1;
     uint8_t				dirLeftRight	= (inputData >> 1) & 0x3;
     uint8_t				reset			= (inputData >> 3) & 0x1;
+    bool                enableCheats    = (inputData & 0xF) == 0xF;
     PLAYER_DIRECTION    direction   	= PLAYER_DIR_NONE;
 
     oldInputData						= inputData;
@@ -92,8 +93,8 @@ void Game::handleUserInput(uint8_t inputData)
     {
     	// go to _next_ level if pressed in main menu.
     	currentLevelIndex	+= (MAIN_MENU == currentState);
-    	// go to _current_ level otherwise.
-        switchLevel();
+        // restart _current_ level otherwise.
+        switchLevel(enableCheats);
         return;
     }
 

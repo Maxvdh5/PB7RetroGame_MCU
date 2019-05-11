@@ -26,22 +26,24 @@ class GpioHandler;
 class GameLevel
 {
 public:
-    GameLevel(uint8_t levelIndex);
+    GameLevel(uint8_t levelIndex, bool cheatMode = false);
     virtual ~GameLevel();
 
 private:
     Block           *m_blocks[MAX_BLOCKS];
     MoveableBlock   *m_playerBlock;
 
+    bool            m_cheatMode;
+
     bool            performMovement();
     bool            checkCollission();
 
 public:
-    LEVEL_STATE     m_state; ///< Stores the state the game is in
+    LEVEL_STATE     m_state; ///< Stores the state the level is in
 
-    bool            update();///<updates a frame
+    bool            update();///<updates location data for dynamic objects in the level
     bool            movePlayerBlock(PLAYER_DIRECTION direction);///< moves player
-    bool            writeLocationData(GpioHandler* targetGpio);///<changes location data of every dynamic object
+    bool            writeLocationData(GpioHandler* targetGpio);///<writes location data to targetGpio
 };
 
 #endif // GAMELEVEL_H
